@@ -12,20 +12,20 @@ Individual public benchmarks (AdvBench, HarmBench, AIR‑Bench, and others) are 
 
 VulcanForge addresses three gaps:
 
-- **Fragmentation** — sources use different schemas, labels, and assumptions. We normalise everything into one schema and one risk taxonomy.
-- **Scale and realism** — real attackers do not send clean, plain‑text prompts. They obfuscate, role‑play, and switch languages. We model those behaviours explicitly.
-- **Traceability** — every variant records the seed it came from and the exact technique applied, so findings are reproducible and auditable.
+- **Fragmentation** — Sources use different schemas, labels, and assumptions. We normalise everything into one schema and one risk taxonomy.
+- **Scale and realism** — Real attackers do not send clean, plain‑text prompts. They obfuscate, role‑play, and switch languages. We model those behaviours explicitly.
+- **Traceability** — Every variant records the seed it came from and the exact technique applied, so findings are reproducible and auditable.
 
 ## What we actually did (the value‑add)
 
-We think of the work in three stages: collect → curate → forge.
+We think of the work in three stages: **collect → curate → forge.**
 
 1. **Collect.** We gathered adversarial prompts from a wide set of reputable open research datasets and benchmarks (full list below).
 2. **Curate.** Aggregation is the straightforward part; curation is where the substantive work lies. We:
-   - de‑duplicated within and across sources,
-   - normalised heterogeneous records into a single schema,
-   - mapped each prompt to a unified risk taxonomy (four pillars; see below),
-   - retained the original source attribution on every row for provenance.
+   - De‑duplicated within and across sources,
+   - Normalised heterogeneous records into a single schema,
+   - Mapped each prompt to a unified risk taxonomy (four pillars; see below),
+   - Retained the original source attribution on every row for provenance.
 
    Curation is an ongoing effort. Sources are continually reviewed, added, and refined, and the corpus is maintained as a living dataset rather than a one‑off release.
 3. **Forge.** We then expand the curated base into many realistic attack patterns by applying variant techniques drawn from Vulcan's adversarial taxonomy. Variants are selected for appropriateness per source and technique rather than emitted as exhaustive permutations, and the un‑transformed base is excluded so no row simply duplicates a seed. To protect the integrity of the methodology, the variant generators themselves are not distributed in this repository.
