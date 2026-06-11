@@ -37,6 +37,7 @@ LARGE_FILE_BYTES = 12 * 1024 * 1024
 OFFSET_STRIDE = 500
 DATA_EXTS = {".jsonl", ".json"}
 EXT_RE = re.compile(r"-extension\d+$", re.IGNORECASE)
+PART_RE = re.compile(r"-part\d+$", re.IGNORECASE)
 
 OFFSETS = {}  # file rel-path -> offset index, inlined into catalog.js
 
@@ -112,7 +113,8 @@ def data_files_in(directory: Path):
 
 
 def family_of(stem: str) -> str:
-    return EXT_RE.sub("", stem)
+    # a split part (…-extension3-part02) belongs to its source family (red_queen)
+    return EXT_RE.sub("", PART_RE.sub("", stem))
 
 
 def main():

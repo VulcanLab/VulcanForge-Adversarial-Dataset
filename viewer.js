@@ -159,9 +159,11 @@ function buildSegments(scope) {
   for (const d of datasets) {
     for (const f of d.files) {
       if (!f || !f.records) continue;
-      // label rows with the dataset, naming the variant when there's more than one file
-      const isVariant = d.files.length > 1 && f.name.replace(/\.(jsonl|json)$/i, "") !== d.id;
-      const label = isVariant ? f.name.replace(/\.(jsonl|json)$/i, "") : d.Name;
+      // label rows with the dataset, naming the variant when there's more than
+      // one file; collapse split parts (…-part03) onto their variant name
+      const stem = f.name.replace(/\.(jsonl|json)$/i, "").replace(/-part\d+$/i, "");
+      const isVariant = d.files.length > 1 && stem !== d.id;
+      const label = isVariant ? stem : d.Name;
       segs.push({ dataset: label, file: f, count: f.records, start });
       start += f.records;
     }
