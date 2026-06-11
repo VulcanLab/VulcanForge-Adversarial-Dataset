@@ -1,0 +1,176 @@
+/* Vulcan-styled prompt viewer — design tokens extracted from
+   https://datasets.vulcanlab.ai (matched 1:1). Pure CSS, no frameworks. */
+
+:root {
+  --bg: #060606;
+  --surface: #0f0f0f;
+  --surface-2: #171717;
+  --border: #1f1f1f;
+  --muted: #a0a4ac;
+  --text: #ffffff;
+  --gold: #f5c53d;
+  --gold-bright: #ffca3a;
+  --teal: #43ffe3;
+  --input-border: #6e6e6e;
+  --hue-safety: 245, 197, 61; /* gold — dataset pill */
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Roboto Condensed", Inter, -apple-system, "system-ui", "Segoe UI", sans-serif;
+  font-size: 16px;
+}
+
+a { color: var(--gold); text-decoration: none; }
+
+.wrap { max-width: 1600px; margin: 0 auto; padding: 0 28px; }
+
+/* ---------- Header / nav ---------- */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; color: var(--text); cursor: pointer;
+}
+.brand:hover { opacity: .85; }
+.brand .mark {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  font-size: 26px; font-weight: 700;
+  color: var(--gold); transform: skewX(-6deg);
+}
+.brand .word { font-size: 26px; font-weight: 700; letter-spacing: 1px; color: var(--text); }
+.connect {
+  background: transparent; color: var(--gold);
+  border: 1px solid var(--gold); border-radius: 100px;
+  padding: 8px 16px; font-family: inherit; font-size: 15px; font-weight: 500;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+}
+.connect:hover { background: rgba(245,197,61,.12); }
+.connect.connected { color: #8bf5c5; border-color: rgba(139,245,197,.5); }
+
+/* ---------- Hero ---------- */
+.hero { padding: 18px 0 6px; }
+.hero h1 {
+  margin: 0;
+  font-size: clamp(48px, 8vw, 100px);
+  font-weight: 600;
+  line-height: 1.1;
+  background: linear-gradient(88deg, var(--gold-bright) 31%, var(--teal) 55%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.hero .sub { color: var(--muted); font-size: 16px; margin-top: 8px; max-width: 900px; }
+
+/* ---------- Toolbar ---------- */
+.prompt-bar {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin: 22px 0 18px;
+}
+.prompt-bar .src { color: var(--muted); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+.prompt-bar select, .prompt-bar input {
+  background: var(--surface-2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px;
+  font-family: inherit; font-size: 14px;
+}
+.prompt-bar .grow { flex: 1; }
+.prompt-bar .pos { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.prompt-bar #promptSearch { width: 240px; }
+.prompt-bar #promptSearch::placeholder { color: #8a8a8a; }
+
+/* ---------- Table ---------- */
+.table-scroll {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: auto;
+  max-height: calc(100vh - 300px);
+}
+table.catalog { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.catalog thead th {
+  position: sticky; top: 0; z-index: 5;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-weight: 400;
+  text-align: left;
+  padding: 12px 16px;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(0,0,0,.3);
+}
+table.catalog tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--surface-2);
+  vertical-align: top;
+}
+table.catalog tbody tr { background: var(--surface); }
+table.catalog tbody tr:hover { background: #141414; }
+
+#promptTable .c-num { width: 80px; text-align: right; }
+#promptTable .c-ds { width: 170px; }
+#promptTable .c-lang { width: 110px; }
+#promptTable .c-cat { width: 200px; }
+#promptTable td.r-num { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#promptTable td.r-prompt { color: rgba(255,255,255,.95); }
+#promptTable .ds-pill {
+  display: inline-block;
+  background: rgba(var(--hue-safety), .12); color: var(--gold);
+  border: 1px solid rgba(var(--hue-safety), .3); border-radius: 100px;
+  padding: 3px 12px; font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.prompt-text {
+  white-space: pre-wrap; word-break: break-word; line-height: 1.5;
+  max-height: 4.5em; overflow: hidden; position: relative; cursor: pointer;
+}
+.prompt-text.open { max-height: none; }
+.prompt-text:not(.open).clamped::after {
+  content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 1.6em;
+  background: linear-gradient(transparent, var(--surface));
+}
+tr:hover .prompt-text:not(.open).clamped::after { background: linear-gradient(transparent, #141414); }
+
+/* ---------- Pagination ---------- */
+.pager {
+  display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+  padding: 14px 2px; flex-wrap: wrap; font-size: 14px; color: var(--muted);
+}
+.pager .spacer { flex: 1; }
+.pager select {
+  background: var(--surface-2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px;
+  font-family: inherit; font-size: 14px;
+}
+.pgbtn {
+  background: transparent; color: rgba(255,255,255,.85);
+  border: 1px solid transparent; border-radius: 6px;
+  padding: 6px 11px; cursor: pointer; font-family: inherit; font-size: 14px;
+  min-width: 36px;
+}
+.pgbtn:hover:not(:disabled) { background: rgba(255,255,255,.08); }
+.pgbtn.active { background: var(--gold); color: #000; font-weight: 700; }
+.pgbtn:disabled { opacity: .35; cursor: default; }
+
+/* ---------- Misc ---------- */
+.spin { color: var(--muted); padding: 30px; text-align: center; }
+.connect-prompt { text-align: center; padding: 48px 20px; color: var(--muted); }
+.connect-prompt .big { font-size: 18px; color: var(--text); margin-bottom: 8px; }
+.connect-prompt button {
+  margin-top: 16px; background: var(--gold); color: #000; border: none;
+  border-radius: 100px; padding: 11px 22px; font-family: inherit;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .prompt-text { font-size: 13px; }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VulcanForge Adversarial Dataset (VF‑Adv) — Vulcan</title>
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="viewer.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://vulcanlab.ai/" target="_blank" rel="noopener" title="vulcanlab.ai">
+      <span class="mark">A</span>
+      <span class="word">VULCAN</span>
+    </a>
+    <button id="connectBtn" class="connect" type="button" style="display:none">
+      <i class="fa-solid fa-folder-open"></i> <span id="connectLabel">Connect data folder</span>
+    </button>
+  </header>
+
+  <!-- hidden directory picker (used only on file://, where fetch is blocked) -->
+  <input type="file" id="folderPicker" webkitdirectory directory multiple style="display:none" />
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>VulcanForge Adversarial Dataset (VF‑Adv)</h1>
+      <p class="sub" id="heroSub">Loading…</p>
+    </section>
+
+    <section id="promptView">
+      <div class="prompt-bar">
+        <label class="src">Source
+          <select id="promptSource" autocomplete="off"></select>
+        </label>
+        <input type="text" class="search" id="promptSearch" placeholder="Filter this page…" autocomplete="off" />
+        <div class="grow"></div>
+        <span id="promptCount" class="pos"></span>
+      </div>
+
+      <div class="table-scroll">
+        <table class="catalog" id="promptTable">
+          <thead>
+            <tr>
+              <th class="c-num">#</th>
+              <th class="c-ds">Dataset</th>
+              <th class="c-prompt">Prompt</th>
+              <th class="c-lang">Language</th>
+              <th class="c-cat">Category</th>
+            </tr>
+          </thead>
+          <tbody id="promptBody"></tbody>
+        </table>
+      </div>
+
+      <div class="pager" id="promptPager"></div>
+    </section>
+  </main>
+
+  <script src="catalog.js"></script>
+  <script src="viewer.js"></script>
+</body>
+</html>
